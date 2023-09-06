@@ -1,12 +1,12 @@
 <template class="body">
-  <div class="header">
-  </div>
-  <HelloWorld msg="Are you bored?"/>
-  <div class="card">
-    <h2>{{ data.activity }}</h2>
-    <p>{{ data.type }}</p>
-    <p> Participants for this activity is {{ data.participants }}</p>
-  </div>
+    <div class="header">
+    </div>
+    <HelloWorld msg="Are you bored?"/>
+    <div class="card">
+      <h2>{{ data.activity }}</h2>
+      <p>{{ data.type }}</p>
+      <p> Participants for this activity is {{ data.participants }}</p>
+    </div>
 </template>
 
 <script setup>
