@@ -1,33 +1,84 @@
+body{
+    margin:0;
+}
 .header{
     display: flex;
     flex-direction: row;
     justify-content: left;
     background-image: url('/src/assets/images/bg.png');
     background-size: cover;
-    width: 105%;
-    height: 105%;
+    width: 100%;
+    height: 100%;
     position: fixed;  
-    justify-content: center;
     z-index: -2;
   }
+.title{
+    display: flex;
+    justify-content: left;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 28%;
+    top: 20%;
+    z-index: 0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    height: 130vh;
+}
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  }
+  .cardContainer{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    z-index: 3;
+
   }
   .card{
     height: 40vh;
     width: 20vw;
     background-image: url('/src/assets/images/card-closed.png');
     background-size: cover;
-    margin-right: 20vw;
+    margin-right: 2vw;
+  }
+  .card2{
+    height: 40vh;
+    width: 20vw;
+    background-image: url('/src/assets/images/card-closed.png');
+    background-size: cover;
+    margin-left: 2vw;
+  }
+  .cardOpen {
+    /* Voeg hier je gewenste stijlen toe voor de nieuwe klasse */
+    position: absolute;
+    height: 60vh;
+    width: 30vw;
+    background-color: yellow;
+    /* Voeg andere stijlen toe zoals je wilt */
+  }
+  .card2Open {
+    /* Voeg hier je gewenste stijlen toe voor de nieuwe klasse */
+    position: absolute;
+    height: 60vh;
+    width: 30vw;
+    background-color: white;
+    /* Voeg andere stijlen toe zoals je wilt */
+  }
+  .dataOpen {
+  }
+  .dataClosed {
+    display: none;
+  }
+  .logo{
+    background-image: url(/src/assets/images/bistroo-logo.svg);
   }
