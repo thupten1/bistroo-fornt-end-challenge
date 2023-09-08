@@ -8,14 +8,14 @@
       <p>Pick a card</p>
     </div>
       <div class="cardContainer">
-      <div :class="[cardLeftOpen ? 'cardOpen' : 'card']" @click="toggleCardLeft">
+      <div :class="[cardLeftOpen ? 'cardOpen' : 'card']" @click="handleCardLeftClick">
         <div :class="[dataOpen ? 'dataOpen' : 'dataClosed']">
           <h2>{{ data.activity }}</h2>
           <p>{{ data.type }}</p>
           <p> Participants for this activity is {{ data.participants }}</p>
         </div>
       </div>
-      <div :class="[cardRightOpen ? 'card2Open' : 'card2']" @click="toggleCardRight">
+      <div :class="[cardRightOpen ? 'card2Open' : 'card2']" @click="handleCardRightClick">
         <div :class="[dataOpen ? 'dataOpen' : 'dataClosed']">
           <h2>{{ data.activity }}</h2>
           <p>{{ data.type }}</p>
@@ -27,29 +27,56 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import getData from './api/Api-Request.vue'
 import './assets/css/globalstyle.css'
+import { useMyStore } from './store/localstore'; // Verander dit pad naar het juiste pad van je store
 
 const data = ref({ activity: '', type: '', participants:''})
 const cardLeftOpen = ref(false);
 const cardRightOpen = ref(false);
 const dataOpen = ref(false);
+const myStore = useMyStore();
 
+// console.log(myStore);
 
-const toggleCardLeft = () => {
-  cardLeftOpen.value = !cardLeftOpen.value;
-  dataOpen.value = !dataOpen.value;
-};
-const toggleCardRight = () => {
-  cardRightOpen.value = !cardRightOpen.value;
-  dataOpen.value = !dataOpen.value;
-};
-
-onMounted(async () => {
-  const result = await getData();
+const handleCardLeftClick = async() => {
+  const result =  await getData();
   data.value.activity = result.activity;
   data.value.type = result.type;
   data.value.participants = result.participants;
-})
+
+    //changing the class name
+  cardLeftOpen.value = !cardLeftOpen.value;
+  dataOpen.value = !dataOpen.value;
+  
+  if (cardLeftOpen.value == true){
+    console.log("slaat op")
+    //storing data
+    myStore.setLaatsteData(data.value)
+  }
+  else{
+    console.log("sla niet op")
+  }
+};
+
+const handleCardRightClick = async() => {
+  const result =  await getData();
+  data.value.activity = result.activity;
+  data.value.type = result.type;
+  data.value.participants = result.participants;
+
+    //changing the class name
+  cardRightOpen.value = !cardRightOpen.value;
+  dataOpen.value = !dataOpen.value;
+  
+  if (cardRightOpen.value == true){
+    console.log("slaat op")
+    //storing data
+    myStore.setLaatsteData(data.value)
+  }
+  else{
+    console.log("sla niet op")
+  }
+};
 </script>
