@@ -48,7 +48,6 @@ const baloontext = ref();
 // console.log(myStore);
 // myStore.clearLocalStore();
 function ChangeBaloonText(){
-
   if(myStore.Activity == ""){
   baloontext.value = "Pick a card you piece of shit";
   }
