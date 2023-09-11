@@ -17,6 +17,9 @@ export const useMyStore = defineStore('myStore', {
             this.Type = data.type;
             this.Participants = data.participants;
         },
+        clearLocalStore(){
+            localStorage.clear();
+        }
     },
     persist: {
         paths: true,
