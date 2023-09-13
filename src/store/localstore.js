@@ -8,8 +8,6 @@ export const useMyStore = defineStore("myStore", {
   }),
   actions: {
     setLaatsteData(data) {
-      console.log(data);
-      console.log("this is data");
       this.Activity = data.activity;
       this.Type = data.type;
       this.Participants = data.participants;

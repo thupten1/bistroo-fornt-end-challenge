@@ -1,4 +1,9 @@
 <template>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+
   <div class="header"></div>
   <div class="container">
     <div class="textbaloonContainer">
@@ -26,6 +31,22 @@
         :data="data"
       ></Cards>
     </div>
+    <div class="settingsContainer">
+      <button class="btnSettings" @click="toggleSettingBlock">
+        <i class="fa fa-gear" style="font-size: 24px"></i>
+      </button>
+      <div class="settingBlock" v-if="isSettingBlockVisible">
+        <div v-for="item in arrType" :key="item">
+          <input
+            type="radio"
+            :name="'option-selected'"
+            v-model="selectedi"
+            :value="item.type"
+          />
+          <label>{{ item.type }}</label>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,8 +60,27 @@ import Cards from "./components/Cards-Component.vue";
 const data = ref({ activity: "", type: "", participants: "" });
 const cardOpen = ref(false);
 const dataOpen = ref(false);
+const isSettingBlockVisible = ref(false);
+const selectedi = ref(false);
+var result = "";
 const myStore = useMyStore();
 const baloontext = ref();
+const arrType = [
+  { type: "all" },
+  { type: "education" },
+  { type: "recreational" },
+  { type: "social" },
+  { type: "diy" },
+  { type: "charity" },
+  { type: "cooking" },
+  { type: "relaxation" },
+  { type: "music" },
+  { type: "busywork" },
+];
+
+const toggleSettingBlock = () => {
+  isSettingBlockVisible.value = !isSettingBlockVisible.value;
+};
 
 // myStore.clearLocalStore();
 function ChangeBaloonText() {
@@ -54,15 +94,34 @@ function ChangeBaloonText() {
   }
 }
 
+async function CheckFilter() {
+  if (selectedi.value === false) {
+    result = await getData();
+    console.log("getrandomData");
+  } else {
+    if (selectedi.value=="all") {
+      result = await getData();
+      console.log("getrandomData");
+    }
+    else{
+      result = await getData(selectedi.value);
+      console.log("getDataFromType " + selectedi.value);
+    }
+  }
+  console.log("test");
+  console.log(result);
+}
+
 onMounted(() => {
   ChangeBaloonText();
 });
 
 const handleCardClick = async () => {
-  const result = await getData();
+  await CheckFilter();
   data.value.activity = result.activity;
   data.value.type = result.type;
   data.value.participants = result.participants;
+  data.value.price = result.price;
 
   //changing the class name
   cardOpen.value = !cardOpen.value;
@@ -70,11 +129,11 @@ const handleCardClick = async () => {
   ChangeBaloonText();
 
   if (cardOpen.value == true) {
-    console.log("slaat op");
+    // console.log("slaat op");
     //storing data
     myStore.setLaatsteData(data.value);
   } else {
-    console.log("sla niet op");
+    // console.log("sla niet op");
   }
 };
 </script>

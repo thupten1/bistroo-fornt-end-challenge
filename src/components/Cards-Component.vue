@@ -1,9 +1,12 @@
 <template>
   <div :class="[cardOpen ? 'cardOpen' : 'card']" @click="handleCardClick">
     <div :class="[dataOpen ? 'dataOpen' : 'dataClosed']">
-      <h2>{{ data.activity }}</h2>
-      <p>{{ data.type }}</p>
-      <p>Participants for this activity is {{ data.participants }}</p>
+      <div class="cardOpenText">
+        <p> You picked "{{ data.type }}" type card.</p>
+        <h2>{{ data.activity }}</h2>
+        <p>  Price is {{ data.price }}</p>
+        <p>Participants for this activity is {{ data.participants }}</p>
+      </div>
     </div>
   </div>
 </template>
