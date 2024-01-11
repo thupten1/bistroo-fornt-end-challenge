@@ -4,7 +4,7 @@
     <div class="textbaloonContainer">
       <div class="textbaloon">
         <div class="textbaloontext">
-          <p>{{ baloontext }}</p>
+          <p id="baloontext">{{ baloontext }}</p>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
         :data="data"
       ></Cards>
     </div>
-    <filterSettings :toggleSettingBlock="toggleSettingBlock" :isSettingBlockVisible="isSettingBlockVisible" :arrType="arrType" :selectedi="selectedi" @update:selectedi="selectedi = $event"/>
+      <filterSettings :toggleSettingBlock="toggleSettingBlock" :isSettingBlockVisible="isSettingBlockVisible" :arrType="arrType" :selectedi="selectedi" @update:selectedi="selectedi = $event"/>
   </div>
 </template>
 
@@ -36,13 +36,15 @@ import getData from "./api/Api-Request.vue";
 import "./assets/css/globalstyle.css";
 import { useMyStore } from "./store/localstore";
 import Cards from "./components/Cards-Component.vue";
-import filterSettings from './components/filterSettings.vue'
+import filterSettings from './components/filterSettings.vue';
+import introJs from "../node_modules/intro.js";
 
 const data = ref({ activity: "", type: "", participants: "" });
 const cardOpen = ref(false);
 const dataOpen = ref(false);
 const isSettingBlockVisible = ref(false);
 const selectedi = ref(false);
+let tour = introJs();
 var result = "";
 const myStore = useMyStore();
 const baloontext = ref();
@@ -62,6 +64,7 @@ const arrType = [
 const toggleSettingBlock = () => {
   isSettingBlockVisible.value = !isSettingBlockVisible.value;
 };
+
 
 // myStore.clearLocalStore();
 function ChangeBaloonText() {
@@ -90,6 +93,29 @@ async function CheckFilter() {
 
 onMounted(() => {
   ChangeBaloonText();
+
+  tour.setOptions({
+  showProgress: true,
+  showStepNumbers: true,
+  showBullets: false,
+
+    steps:[{
+      title: 'welkom',
+      intro: 'Hi',
+    },
+    {
+    element: document.querySelector('.settingsContainer'),
+    intro: 'This step focuses on setting',
+    },
+    {
+    element: document.querySelector('#baloontext'),
+    intro: 'This step focuses on the last activity',
+    },
+    {
+    title: 'Farewell!',
+    intro: 'And this is our final step!',
+  }] 
+  }).start();
 });
 
 const handleCardClick = async () => {
